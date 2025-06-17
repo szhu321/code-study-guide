@@ -215,7 +215,7 @@ console.log(typeof str); // string
 ## Booleans and If-Statements
 
 ### Booleans
-Boolean is a value that can be `true` or `false`.
+A boolean is a value that can be `true` or `false`.
 
 ```JavaScript
 console.log(2 > 5); // false
@@ -234,7 +234,7 @@ console.log(2 < 5); // true
 != // Not equal to
 ```
 
-- It is almost always better to use Strictly equal `===` and strictly not equal `!==` as it also make sure both values have the same type.
+- It is almost always better to use Strictly equal `===` over `==` and strictly not equal `!==` over `!=` because they make sure both values have the same type.
 ```JavaScript
 console.log(2 == "2") // true, JavaScript converts both to the same type then compares.
 console.log(2 === "2") // false, number type is not equal string type.
@@ -515,7 +515,151 @@ if(!currency2) {
 console.log(currency2); // USD
 ```
 
+## Functions
+Functions lets you reuse code.
+```JavaScript
+function hello() {
+    console.log("Hello there");
+}
+
+hello(); // Hello there
+hello(); // Hello there
+hello(); // Hello there
+// ...
+// You can reuse the function as many times as you want.
+```
+- Functions are created with the `function` keyword.
+- The name of the function is next and follow the same rules as variable names.
+    - No keywords: E.g. let, function, etc.
+    - Can't start with a number.
+    - Can't use special characters except `$` `_`.
+    - Best practice: Use camelCase. E.g. `sayHello`
+- Finally, the code goes inside the `{}` of the funcion.
+- Note: Creating the function doesn't run the code. You have to call it by typing the function name with `()`. E.g. `hello()`.
+```JavaScript
+// Creating the function. Doesn't run the code yet.
+function sayHello() {
+    console.log("I said hello!");
+}
+
+// Calling the function
+sayHello(); // I said hello!
+```
+### Function Scope
+- Function creates a scope. All variables created inside the function only exist inside the function.
+```JavaScript
+function checkWeather() {
+    const weather = "sunny";
+    console.log(weather);
+}
+
+checkWeather(); // sunny
+console.log(weather); // Error, weather only exist inside the function.
+```
+
+### Return statement
+- The `return` keyword allows you to get back a value from a function.
+```JavaScript
+function getSecretNumber() {
+    return 2;
+}
+
+// Stores the secret number in a variable.
+const secretNumber = getSecretNumber(); 
+console.log(secretNumber); // 2
+
+// Directly prints the secret number to the console.
+console.log(getSecretNumber()); // 2
+```
+- Other things we can return.
+```JavaScript
+// Calculation
+return 5 + 10;
+// Variables
+return secretNumber;
+// Anything else that results in a value.
+return getSecretNumber();
+```
+- If no return value is provided, undefined will be returned.
+```JavaScript
+function getCreditCardNumber() {
+    return;
+}
+console.log(getCreditCardNumber()) // undefined
+```
+- A return statement ends the function immediately.
+```JavaScript
+function tellJoke() {
+    console.log("Knock Knock.");
+    console.log("Who's there?");
+    // early return. The rest of the function is not called.
+    return;
+    console.log("Joe");
+}
+tellJoke(); // Knock Knock. 
+            // Who's there?
+```
+
+### Parameter
+- A **Parameter** is a special variable that store the value passed into functions.
+- An **Argument** is the actual value that is passed into a function when it is called.
+- We can create parameters by putting them into the `()` of a function.
+- Parameter naming rules follow the same rules as variable and functions.
+- The values that we pass into a function are called **arguments**.
+```JavaScript
+// function with a single parameter name.
+function printFavoriteColor(name) {
+    if(name === "Bob") {
+        console.log("Green");
+    } else if(name === "Steve") {
+        console.log("Yellow");
+    } else {
+        console.log("Unknown");
+    }
+}
+
+// "Bob", "Steve", and "Bill" are arguments.
+printFavoriteColor("Bob") // Green
+printFavoriteColor("Steve") // Yellow
+printFavoriteColor("Bill") // Unknown
+```
+- We seperate multiple parameters with a `,`.
+```JavaScript
+// Returns num1 if it is bigger. Otherwise return num2.
+function getMax(num1, num2) {
+    if(num1 > num2) {
+        return num1;
+    }
+    return num2;
+}
+console.log(getMax(2, 3)); // 3
+console.log(getMax(5, 5)); // 5
+```
+### Default Values
+- If you dont provide a value to a function the parameter's value will be `undefined`.
+```JavaScript
+function print(value) {
+    console.log(value);
+}
+print("Hello"); // Hello
+print(); // undefined
+```
+- You can provide a default value to the parameter.
+```JavaScript
+function print(value = "Empty") {
+    console.log(value);
+}
+print("Hello"); // Hello
+print(); // Empty
+```
+
+
+
+
+
 ## More coming soon
+
+
 
 ## Credits
 This study guide is based on the material from ["JavaScript Tutorial Full Course - Beginner to Pro"](https://youtu.be/EerdGm-ehJQ?si=DwCl2GqrbDYP0rce) by SuperSimpleDev.
