@@ -309,10 +309,10 @@ console.log(1 > 0 && 1 > 2) // false, becuase 1 > 2 is false.
 - The or (`||`) operator.
 - `condition1 || condition2` evaluates to true if at least one condition is true. Otherwise it is false.
 ```JavaScript
-console.log(true && true) // true
-console.log(false && true) // true
-console.log(true && false) // true
-console.log(false && false) // false
+console.log(true || true) // true
+console.log(false || true) // true
+console.log(true || false) // true
+console.log(false || false) // false
 
 //E.g.
 console.log(1 > 0 || 1 > 2) // true, because the left side(1 > 0) is true.
