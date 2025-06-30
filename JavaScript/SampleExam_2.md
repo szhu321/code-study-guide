@@ -127,7 +127,7 @@
    A) `null`  
    B) `undefined`  
    C) `0`  
-   D) `"Empty"` (if default is set)  
+   D) `"Empty"`
 
 
 18. **Which of the following is an example of an early return?**  
