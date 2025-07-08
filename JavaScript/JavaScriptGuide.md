@@ -654,8 +654,348 @@ print(); // Empty
 ```
 
 
+## Objects
+
+Objects are values that act as a container to group other values.
+
+```JavaScript
+const person = {
+    firstName: "John",
+    lastName: "Smith",
+    age: 38
+}
+```
+- In the example above, `firstName`, `lastName`, and `age` are all **properties** of the object.
+- The **values** of these properties appear after the colon `:`.
+- Each of the **property-value pairs** is separated by a comma `,`.
+- Using `typeof` keyword on an object will return `'object'`.
+
+### Accessing the values
+```JavaScript
+const person = {
+    firstName: "John",
+    lastName: "Smith",
+    age: 38
+}
+
+console.log(person.firstName); // John
+console.log(person.age); // 38
+console.log(person); // {firstName: 'John', lastName: 'Smith', age: 38}
+```
+- The value of a property that doesn't exist is undefined
+```JavaScript
+// ... 
+console.log(person.dontExist); // undefined
+```
+### Changing the value
+```JavaScript
+const person = {
+    firstName: "John",
+    lastName: "Smith",
+    age: 38
+}
+person.firstName = "Bob";
+console.log(person.firstName); // Bob
+```
+### Adding a value
+```JavaScript
+const person = {
+    firstName: "John",
+    lastName: "Smith",
+    age: 38
+}
+person.eyeColor = "Blue"
+console.log(person.eyeColor); // Blue
+```
+### Removing a value
+```JavaScript
+const person = {
+    firstName: "John",
+    lastName: "Smith",
+    age: 38
+}
+delete person.age;
+console.log(person.age); // undefined
+```
+
+### Bracket notation
+- Before we used **dot notation** to read, update, and delete values. We can also use **bracket notation**.
+    - We can also use **bracket notation** to access values.
+    ```JavaScript
+    // ... 
+    // dot notation
+    console.log(person.firstName); // John
+    // bracket notation equivalent
+    console.log(person["firstName"]); // John
+    ```
+    - To create/update values.
+    ```JavaScript
+    // ... 
+    // dot notation
+    person.eyeColor = "Blue"
+    // bracket notation equivalent
+    person["eyeColor"] = "Blue"
+    ```
+    - To delete values
+    ```JavaScript
+    // ... 
+    // dot notation
+    delete person.age;
+    // bracket notation equivalent
+    delete person["age"];
+    ```
+
+- You don't need to put strings inside the brackets. Any values or an expression that evaluates to a value will work.
+    ```JavaScript
+    // ...
+    const property = "height";
+    // property is a variable with a value of "height".
+    person[property] = 60;
+    console.log(person[property]); // 60
+    ```
+
+- When creating objects the following syntax is also allowed
+    ```JavaScript
+    const person = {
+        firstName: "John",
+        ["lastName"]: "Smith", // bracket notation
+        "age": 38 // using a string
+    }
+    ```
+
+### When to use bracket notation
+In general, stick with **dot notation**, and only use **bracket notation** for properties that don't work with **dot notation**.
+- E.g. `person.first-name` will cause error. Use `person["first-name"]`.
 
 
+### Nested objects
+Objects can have properties with another object as the value.
+```JavaScript
+const person = {
+    name: {
+        firstName: "John",
+        lastName: "Smith",
+        middleName: ""
+    }
+    age: 38,
+}
+```
+To change the value of the first name we will use **dot notation** twice.
+```JavaScript
+// ...
+// person.name gives us the name object. Then we add .firstName.
+person.name.firstName = "Sam";
+console.log(person.name.firstName); // Sam
+```
+
+### Function as a value
+Another type of value is a function. Functions can then also be stored in variables and objects.
+- Functions inside of objects are also called **methods**.
+```JavaScript
+const person = {
+    name: "John Smith",
+    sayHello: function() {
+        console.log("Hello");
+    }
+}
+console.log(person.sayHello()); // Hello
+```
+
+### JSON
+- JSON is a file format used to store data.
+- It uses very similar syntax to JavaScript objects.
+```JSON
+{
+    "firstName": "Sam",
+    "lastName": "Smith",
+    "age": 35
+}
+```
+- The JSON format can be understood by many different programming languages.
+
+We can use `JSON.stringify()` to convert JavaScript Objects into JSON format.
+```JavaScript
+const person = {
+    firstName: "John",
+    lastName: "Smith",
+    age: 38
+}
+const personJSON = JSON.stringify(person);
+console.log(typeof personJSON); // string
+console.log(personJSON); // {"firstName":"John","lastName":"Smith","age":38}
+```
+Converting the JSON string back to a JavaScript Object using `JSON.parse()`.
+```JavaScript
+const personObject = JSON.parse(personJSON);
+console.log(typeof personObject); // object
+console.log(personObject); // {firstName: 'John', lastName: 'Smith', age: 38}
+```
+
+### localStorage
+Local Storage can be used to save data onto the browser. The data can be loaded the next time the application runs.
+
+Save data:
+```JavaScript
+// setItem(key, value). key and value are both strings.
+localStorage.setItem("message", "hello there!");
+```
+Get data:
+```JavaScript
+// getItem(key).
+const message = localStorage.getItem("message");
+console.log(message); // hello there!
+// getItem returns null if the item is not found.
+const money = localStorage.getItem("money");
+console.log(money); // null
+```
+Remove data:
+```JavaScript
+localStorage.removeItem("message");
+```
+Remove all data:
+```JavaScript
+localStorage.clear();
+```
+
+### null vs undefined
+`null` is a value used when we intentionally want something to have no value.
+
+Unlike `undefined` we can use `null` to avoid using the default value of a parameter.
+```JavaScript
+function speak(message = "hello") {
+    console.log(message);
+}
+
+speak(); // "hello"
+speak(undefined); // "hello"
+
+speak(null); // null
+```
+In most cases, `null` and `undefined` works the same way.
+
+### Auto-boxing
+When a method or property is accessed on a value (e.g. a string, number, boolean). A temporary **wrapper object** is created.
+
+These built-in objects include `String` for strings, `Number` for numbers, and `Boolean` for booleans. (there are more)
+
+This allows us to run methods directly on strings, numbers, etc.
+
+```JavaScript
+const message = "hello".toUpperCase();
+console.log(message); // "HELLO"
+```
+
+### Objects are references
+When we store a new object in a variable. A reference to the object's location in memory is stored.  
+This means that if we assign the variable to a new variable, the new variable will be an alias for the same object.
+
+```JavaScript
+const object1 = {
+    message: "hello",
+}
+// copy by reference.
+const object2 = object1;
+object1.message = "good night",
+
+console.log(object1.message); // "good night"
+console.log(object2.message); // "good night"
+``` 
+- Notice how in the code above `object1`'s and `object2`'s messages are both `"good night"`, even though we only set `object1`'s message to `"good night"`? This is because both `object1` and `object2` reference the same object in memory. 
+- Also notice how we can change the message of `object1`(with `object1.message`) even though we are using `const`. This is because `object1` stores a reference to the object. Since the reference is not changed, `const` rules are not broken.
+
+Since object references are stored, if we create two objects with the same properties and values they will not be equal.
+
+For them to be equal both need to reference the same object in memory.
+```JavaScript
+const object1 = {
+    message: "hello",
+}
+const object2 = {
+    message: "hello",
+}
+const object3 = object2;
+console.log(object1 === object2); // false
+console.log(object2 === object3); // true
+
+// Comparing values works as usual.
+console.log(object1.message === object2.message); // true
+```
+
+### Shortcuts for objects
+#### **Destructuring**  
+A shortcut that allows us to store object values into a variable.
+
+Let's say we want to store the object's property to a variable. If the property's name is the same as the variable's name we can use a shortcut called destructuring.
+```JavaScript
+// Not using destructuring
+const person = {
+    name: "Andy",
+    age: 30,
+}
+const name = person.name;
+const age = person.age;
+```
+```JavaScript
+// Using destructuring 
+const person = {
+    name: "Andy",
+    age: 30,
+}
+const { name, age } = person;
+console.log(name); // "Andy"
+console.log(age); // 30
+```
+- Notice how the variable names have to match the object's property names.
+- The order of `{ name, age }` doesn't matter. If we do `{ age, name }`, `age` will still be `30` and `name` will still be `"Andy"`.
+
+#### **Shorthand property**  
+There is also a shortcut to creating objects. For example, let's say we are creating an object called `person`.
+```JavaScript
+// Not using the shorthand property
+const name = "Andy";
+const age = 30;
+
+const person = {
+    name: name,
+    age: age,
+}
+```
+We can shorthand this since the property name matches the variable name.
+```JavaScript
+// Using the shorthand property.
+const name = "Andy";
+const age = 30;
+
+const person = {
+    name,
+    age,
+}
+```
+
+#### **Shorthand method**  
+We can create functions in objects without specifying the `function` keyword and the function's name.
+```JavaScript
+// Normally
+const person = {
+    name: "Andy",
+    age: 30,
+    speak: function sayHello() {
+        console.log("hello");
+    }
+}
+console.log(person.speak()); // "hello"
+```
+```JavaScript
+// With shorthand method.
+const person = {
+    name: "Andy",
+    age: 30,
+    speak() {
+        console.log("hello");
+    }
+}
+console.log(person.speak()); // "hello"
+```
 
 ## More coming soon
 
